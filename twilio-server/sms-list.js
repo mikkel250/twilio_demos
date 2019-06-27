@@ -8,31 +8,42 @@ const app = express();
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
- 
+
 // parse application/json
 app.use(bodyParser.json());
 
 var todoList = [];
 
 
-app.get('/sms', (req, res) => {
+app.post('/sms', (req, res) => {
     const twiml = new MessagingResponse();
-    let incoming = req.query;
-    let msg = incoming.body.toLowerCase();
-    let msgBody = req.body;
+    //let incoming = req.query;
+    let msg = req.body.Body;
+    let msgBody = msg.toLowerCase();
+    let command = msgBody[0];
+    let item = msgBody.slice(1);
+    
+    if (command === 'add') {
+        console.log('add');        
+        todoList.push(item);
+        twiml.message(`Added ${item}`);
 
-    if (msg[0] === 'add') {
-        console.log('add');
+    } else if (command === 'list') {
+        console.log('list');
+        twiml.message(`${todoList.forEach}`)
+    } else if (command === 'remove') {
+        console.log('remove');
+    } else {
+        console.log(`incorrect command. MsgBody: \n${msgBody}`);
+        twiml.message(`Sorry, I didn't understand. Please begin your message with one of the following commands: add, list, remove.`)
     }
-    //console.log(`request body: ${}`);
-    console.log(msgBody);
+ 
 
-    twiml.message(
-      `Hi! It looks like your phone number was born in ${JSON.stringify(incoming)}`
-    );
+    // twiml.message(
+    //   `Hi! It looks like your phone number was born in ${JSON.stringify(incoming)}`
+    // );
 
-    res.writeHead(200, { 'Content-Type': 'text/xml' });
-    res.end(twiml.toString());
+    // r 
 });
 
 http.createServer(app).listen(1337, () => {
