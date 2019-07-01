@@ -10,7 +10,7 @@ client.messages
   .create({
     from: myNum,
     //mediaUrl: "https://amethyst-squid-3105.twil.io/assets/sms-code.png",
-    body: `Greetings! The current time is: ${date} 1QLA2YKWR633UFK`,
+    body: `Greetings! The current time is: ${date} KSI0KYB47D96XX1`,
     to: "+12092104311"
   })
   .then(message => console.log(message.sid));

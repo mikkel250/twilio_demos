@@ -2,6 +2,7 @@ const http = require('http');
 const express = require('express');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 var bodyParser = require("body-parser");
+var port = 1337;
 
 const app = express();
 
@@ -17,7 +18,7 @@ app.get('/sms', (req, res) => {
     let incoming = req.query.FromCountry;
 
     console.log(`request body: ${incoming}`);
-    //console.log(req);
+    console.log(req);
 
     twiml.message(
       `Hi! It looks like your phone number was born in ${JSON.stringify(incoming)}`
@@ -27,6 +28,6 @@ app.get('/sms', (req, res) => {
     res.end(twiml.toString());
 });
 
-http.createServer(app).listen(1337, () => {
-    console.log('Express server listening on port 1337');
+http.createServer(app).listen(port, () => {
+  console.log(`Express server listening on ${ port }`);
 });
