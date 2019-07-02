@@ -24,7 +24,7 @@ app.get('/sms', (req, res) => {
       `Hi! It looks like your phone number was born in ${JSON.stringify(incoming)}`
     );
 
-    res.writeHead(200, { 'Content-Type': 'text/xml' });
+    res.writeHead(200, { "Content-Type": "text/xml" });
     res.end(twiml.toString());
 });
 
