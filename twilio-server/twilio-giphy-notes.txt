@@ -1,0 +1,76 @@
+curl "http://api.giphy.com/v1/gifs/random?api_key=OTnzF45UALo0lm41EI1fTCBiTV1v789i&tag=cat&limit=1"
+
+in the obj that's returned, you can probably just pull the data.bitly_url property
+Send it with a get request, btw
+
+Then just use the giphy link in the mediaUrl of the text reply
+
+ANIMALS TAGS
+badger
+bat
+bear
+bird
+bulldog
+butterfly
+camel
+cat
+caterpillar
+chicken
+chihuahua
+corgi
+cow
+crab
+deer
+dog
+dragon
+duck
+eagle
+echidna
+elephant
+ferret
+fish
+frog
+giraffe
+goat
+grumpy cat
+hamster
+hedgehog
+hippo
+horse
+insect
+jellyfish
+kangaroo
+koala
+lion
+lizard
+lobster
+maru
+monkey
+mouse
+octopus
+otter
+owl
+panda
+penguin
+pig
+polar bear
+poodle
+porcupine
+praying mantis
+pug
+rabbit
+raccoon
+red panda
+seal
+shark
+sheep
+skunk
+sloth
+spider
+squirrel
+starfish
+tiger
+turtle
+unicorn
+whale
+wolf
