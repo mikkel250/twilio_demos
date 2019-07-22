@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/sms', (req, res) => {
     const twiml = new MessagingResponse();
-    // first, send a greeting, then start a while loop?
+    // first, send a greeting, then start a while loop? Or put the ifs inside a while (command != exit, stop)
     // other option would be to do an if 
     let msgBody = req.body.Body;
     let command = msgBody.toLowerCase();
@@ -26,36 +26,42 @@ app.post('/sms', (req, res) => {
     //let item = msgBody.slice(1).join(" ");
     console.log(`command: ${command}`)
 
-    // (command.includes('hi' || 'hello', "what's up" || "how's it going" || 'hey' || 'hey there' || 'start'))
-    if (command) {
-        console.log("inside if statement\n");
-      twiml.message(
-        "Hi there! I'm a chatbot that's here to make you smile! Send me a one word reply with your favorite animal and I'll send you a surprise! \nSend STOP or END to exit."
-      );
-      res.writeHead(200, { "Content-Type": "text/xml" });
-        res.end(twiml.toString());
+    while (
+      typeof command === 'string' &&
+      (command != "stop" || command != "end")
+    ) {
+        console.log("inside while statement\n");
+        twiml.message(
+          "Hi there! I'm a chatbot that's here to make you smile! Send me a one word reply with your favorite animal and I'll send you a surprise! \nSend STOP or END to exit."
+        );
 
-        while (command === typeof String && (command != 'stop' || command != 'end') ) {
-            twiml.message(
-              `Here's a ${command}, hope you like it!\nSend any other word you'd like and I'll try to find you another cool gif!`
-            );
-            message.media(gif);
-            res.writeHead(200, { "Content-Type": "text/xml" });
-            res.end(twiml.toString());
-        }
-        
-    } else if (command === typeof String || command.length < 3) {
-      twiml.message(
-        `Here's a ${command}, hope you like it!\nSend any other word you'd like and I'll try to find you another cool gif!`
-      );
-      message.media(gif);
-      res.writeHead(200, { "Content-Type": "text/xml" });
-      res.end(twiml.toString());
-      } else {
-          twiml.message(`Sorry, I didn't understand, or couldn't find what you're looking for. Please reply with something (else) you'd like to see.`);
+        res.writeHead(200, { "Content-Type": "text/xml" });
+        res.send(twiml.toString());
+
+        // (command.includes('hi' || 'hello', "what's up" || "how's it going" || 'hey' || 'hey there' || 'start'))
+        if (command) {
+          console.log("inside if statement\n");
+          twiml.message(
+            "Hi there! I'm a chatbot that's here to make you smile! Send me a one word reply with your favorite animal and I'll send you a surprise! \nSend STOP or END to exit."
+          );
           res.writeHead(200, { "Content-Type": "text/xml" });
-          res.end(twiml.toString());
-    }
+          res.send(twiml.toString());
+        } else if (command === typeof String || command.length < 3) {
+          twiml.message(
+            `Here's a ${command}, hope you like it!\nSend any other word you'd like and I'll try to find you another cool gif!`
+          );
+          message.media(gif);
+          res.writeHead(200, { "Content-Type": "text/xml" });
+          res.send(twiml.toString());
+        } else {
+          twiml.message(
+            `Sorry, I didn't understand, or couldn't find what you're looking for. Please reply with something (else) you'd like to see.`
+          );
+          res.writeHead(200, { "Content-Type": "text/xml" });
+          res.send(twiml.toString());
+        }
+      }
+  res.end();
     // if (command === typeof String) {            
     //     twiml.message(`Here's a ${command}, hope you like it!\nSend any other word you'd like and I'll try to find you another cool gif!`);
     //     message.media(gif);
